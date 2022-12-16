@@ -5,12 +5,25 @@ POST http://localhost:6060/api/v1/tours HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":"testing3",
+    "name":"testing4e6",
     "duration": 10,
     "difficuilty": "easy",
-    "price": 4000
+    "price": 40004535,
+    "rating": 4.7
 }
 
 ###
-GET http://localhost:6060/api/v1/tours/2 HTTP/1.1
+GET http://localhost:6060/api/v1/tours/639c9f7cff59d2ec89ae350f HTTP/1.1
 
+###
+PATCH http://localhost:6060/api/v1/tours/639c9f7cff59d2ec89ae350f HTTP/1.1
+Content-Type: application/json
+
+{
+    "name":"testing893",
+    "price": 4444,
+    "rating": 4.7
+}
+
+###
+DELETE http://localhost:6060/api/v1/tours/639c9f7cff59d2ec89ae350f HTTP/1.1
