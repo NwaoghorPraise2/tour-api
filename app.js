@@ -1,26 +1,24 @@
 const express = require('express');
 require('dotenv').config();
+const morgan = require('morgan');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
-const morgan =  require('morgan');
-
 
 /*Middlewares*/
 const app = express();
 app.use(express.static('public'));
 app.use(express.json());
 app.use((req, res, next) => {
-    console.log('hello middle');
-    next();
+  console.log('hello middle');
+  next();
 });
 
-if (process.env.NODE_ENV === 'development'){
-    app.use((req, res, next)=>{
-        req.requestTime = new Date().toISOString();
-        next();
-    });
+if (process.env.NODE_ENV === 'development') {
+  app.use((req, res, next) => {
+    req.requestTime = new Date().toISOString();
+    next();
+  });
 }
-
 
 app.use(morgan('dev'));
 app.use('/api/v1/tours', tourRouter);
