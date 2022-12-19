@@ -1,4 +1,5 @@
-const Tour = require('../models/toursModel');
+const { query } = require("express");
+const Tour = require("../models/toursModel");
 // const { waitForDebugger } = require('inspector');
 
 //
@@ -27,10 +28,17 @@ const Tour = require('../models/toursModel');
 
 const getAllTours = async (req, res) => {
   try {
-    const tours = await Tour.find();
+    // eslint-disable-next-line node/no-unsupported-features/es-syntax
+    const queryObj = { ...req.query };
+    const exemptField = ["sort", "page", "limit", "fields"];
+    exemptField.forEach((el) => delete queryObj[el]);
+
+    const queryST = Tour.find(queryObj);
+
+    const tours = await queryST;
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       requestedAt: req.requestTime,
       results: tours.length,
       data: {
@@ -39,7 +47,7 @@ const getAllTours = async (req, res) => {
     });
   } catch (err) {
     res.status(400).json({
-      status: 'failed',
+      status: "failed",
       message: err.message,
     });
   }
@@ -59,14 +67,14 @@ const getSingleTour = async (req, res) => {
     const tour = await Tour.findById(id);
 
     res.status(201).json({
-      status: 'success',
+      status: "success",
       data: {
         tour,
       },
     });
   } catch (err) {
     res.status(400).json({
-      status: 'fail',
+      status: "fail",
       message: err.message,
     });
   }
@@ -86,14 +94,14 @@ const createTour = async (req, res) => {
   try {
     const newTour = await Tour.create(req.body);
     res.status(201).json({
-      status: 'success',
+      status: "success",
       data: {
         tour: newTour,
       },
     });
   } catch (err) {
     res.status(400).json({
-      status: 'fail',
+      status: "fail",
       message: err.message,
     });
   }
@@ -120,14 +128,14 @@ const updateTour = async (req, res) => {
     });
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: {
         updatedTour,
       },
     });
   } catch (err) {
     res.status(400).json({
-      status: 'fail',
+      status: "fail",
       message: err.message,
     });
   }
@@ -139,12 +147,12 @@ const deleteTour = async (req, res) => {
     await Tour.findByIdAndDelete(id);
 
     res.status(204).json({
-      status: 'success',
+      status: "success",
       data: null,
     });
   } catch (err) {
     res.status(400).json({
-      status: 'fail',
+      status: "fail",
       message: err.message,
     });
   }
