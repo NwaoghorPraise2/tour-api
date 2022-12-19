@@ -1,4 +1,3 @@
-const { query } = require("express");
 const Tour = require("../models/toursModel");
 // const { waitForDebugger } = require('inspector');
 
