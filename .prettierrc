@@ -1,9 +1,9 @@
 {
-  "prettier/prettier": [
-    "error",
-    {
-      "singleQuote": true,
-      "parser": "flow"
-    }
-  ]
+  "tabWidth": 2,
+  "singleQuote": true,
+  "printWidth": 80,
+  "bracketSpacing": false,
+  "trailingComma": "es5",
+  "bracketSameLine": false,
+  "semi": true
 }
