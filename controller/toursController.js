@@ -1,50 +1,24 @@
 /* eslint-disable node/no-unsupported-features/es-syntax */
 const Tour = require('../models/toursModel');
+const APIFeatures = require('../utils/apiFeatures');
+
+const alaistopTours = async (req, res, next) => {
+  req.query.sort = '-ratingAverage,-price';
+  req.query.limit = '5';
+  req.query.fields = 'price,ratingsAverage,summary,difficulty,';
+  next();
+};
 
 const getAllTours = async (req, res) => {
   try {
-    const queryObj = {...req.query};
-    const exemptField = ['sort', 'page', 'limit', 'fields'];
-    exemptField.forEach((el) => delete queryObj[el]);
+    //handle Querys
+    const feature = new APIFeatures(Tour.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
 
-    //Advanved Filter
-    let querySTR = JSON.stringify(queryObj);
-    querySTR = querySTR.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-
-    const queryST = Tour.find(JSON.parse(querySTR));
-
-    //sorting
-    if (req.query.sort) {
-      const sortBy = req.query.sort.split(',').join(' ');
-      queryST.sort(sortBy);
-    } else {
-      queryST.sort('-createdAt');
-    }
-
-    //fields
-    if (req.query.fields) {
-      const fieldBy = req.query.fields.split(',').join(' ');
-      console.log(req.query.fields);
-      queryST.select(fieldBy);
-    } else {
-      queryST.select('-__v');
-    }
-
-    //pagination
-    const page = req.query.page * 1 || 1;
-    const limit = req.query.limit * 1 || 100;
-    const skip = (page - 1) * limit;
-
-    queryST.skip(skip).limit(limit);
-
-    if (req.query.page) {
-      const numTour = await Tour.countDocuments();
-      if (skip >= numTour) {
-        throw new Error('page doesnot exist');
-      }
-    }
-
-    const tours = await queryST;
+    const tours = await feature.query;
 
     res.status(200).json({
       status: 'success',
@@ -165,4 +139,5 @@ module.exports = {
   createTour,
   updateTour,
   deleteTour,
+  alaistopTours,
 };
