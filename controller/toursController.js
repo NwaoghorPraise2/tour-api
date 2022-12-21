@@ -31,6 +31,18 @@ const getAllTours = async (req, res) => {
     }
 
     //pagination
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit * 1 || 100;
+    const skip = (page - 1) * limit;
+
+    queryST.skip(skip).limit(limit);
+
+    if (req.query.page) {
+      const numTour = await Tour.countDocuments();
+      if (skip >= numTour) {
+        throw new Error('page doesnot exist');
+      }
+    }
 
     const tours = await queryST;
 
@@ -64,7 +76,7 @@ const getSingleTour = async (req, res) => {
   } catch (err) {
     res.status(400).json({
       status: 'fail',
-      message: err.message,
+      message: [err.message],
     });
   }
   //     const id = req.params.id;
