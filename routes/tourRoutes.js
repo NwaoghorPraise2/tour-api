@@ -9,6 +9,8 @@ router
   .get(controller.alaistopTours, controller.getAllTours);
 
 router.route('/').get(controller.getAllTours).post(controller.createTour);
+router.route('/tour-stats').get(controller.getTourStats);
+router.route('/monthly-plan/:year').get(controller.getMonthlyPlan);
 
 router
   .route('/:id')
