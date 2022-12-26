@@ -1,5 +1,7 @@
 /* eslint-disable node/no-unsupported-features/es-syntax */
-const Tour = require('../models/toursModel');
+const {toursModel} = require('../models/index');
+
+const Tour = toursModel;
 const APIFeatures = require('../utils/apiFeatures');
 
 const alaistopTours = async (req, res, next) => {
