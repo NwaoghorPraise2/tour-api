@@ -7,7 +7,8 @@
     "test": "jest",
     "test-watch": "jest --watch",
     "dev": "nodemon server.js",
-    "prod": "NODE_ENV=production node server.js"
+    "prod": "NODE_ENV=production node server.js",
+    "debug": "ndb server.js"
   },
   "keywords": [
     "Learning",
@@ -22,6 +23,7 @@
     "jest": "^29.3.1",
     "mongoose": "^6.8.0",
     "morgan": "^1.10.0",
+    "ndb": "^1.1.5",
     "nodemon": "^2.0.20",
     "slugify": "^1.6.5"
   },
