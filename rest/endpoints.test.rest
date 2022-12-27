@@ -1,5 +1,5 @@
 
-GET http://localhost:6060/api/v1/tours HTTP/1.1
+GET http://localhost:6060/api/v1/tours/tour-stats HTTP/1.1
 
 ###
 POST http://localhost:6060/api/v1/tours HTTP/1.1
