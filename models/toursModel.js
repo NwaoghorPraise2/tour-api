@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const tourSchema = new mongoose.Schema(
   {
@@ -12,6 +13,7 @@ const tourSchema = new mongoose.Schema(
       type: Number,
       required: [true, 'A tour must have a duration'],
     },
+    slug: String,
     maxGroupSize: {
       type: Number,
       required: [true, 'A tour must have a group size'],
@@ -56,8 +58,28 @@ const tourSchema = new mongoose.Schema(
     },
     startDates: [Date],
   },
-  {timestamps: true}
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+  }
 );
+
+tourSchema.virtual('durationWeeks').get(function () {
+  return this.duration / 7;
+});
+
+//Document Middlewares. best practice Fat Models, Thin Controllers
+//pre middleware will do somrthin before saving to db
+tourSchema.pre('save', function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+//Post middleware will push someting when the pre is done before pushing to db
+tourSchema.post('save', function (doc, next){
+  console.log(doc);
+  next();
+});
 
 const Tour = mongoose.model('Tour', tourSchema);
 

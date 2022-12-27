@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../../app');
 
-jest.setTimeout(5000000);
+// jest.setTimeout(5000000);
 
 // eslint-disable-next-line no-undef
 describe('testing for tours get end point', () => {
