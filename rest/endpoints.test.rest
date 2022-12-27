@@ -1,17 +1,18 @@
 
-GET http://localhost:6060/api/v1/tours/top-5-cheap HTTP/1.1
+GET http://localhost:6060/api/v1/tours HTTP/1.1
 
 ###
 POST http://localhost:6060/api/v1/tours HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":"The City Wanderer222222",
+    "name":"The City WandererTest Secrete2222223",
     "duration":9,
     "maxGroupSize":20,
     "difficulty":"easy",
     "ratingsAverage":4.6,
     "ratingsQuantity":54,
+    "secretTour": true,
     "price":1197,
     "summary":"Living the life of Wanderlust in the US' most beatiful cities",
     "description":"Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat lorem ipsum dolor sit amet.\nConsectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat!",
