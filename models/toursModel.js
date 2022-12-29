@@ -96,7 +96,7 @@ tourSchema.pre('save', function (next) {
 
 //Post middleware will push someting when the pre is done before pushing to db
 tourSchema.post('save', function (doc, next){
-  console.log(doc);
+  // console.log(doc);
   next();
 });
 
@@ -110,11 +110,11 @@ tourSchema.pre(/^find/, function (next) {
 });
 
 //Find POST MIDDLE WARE
-tourSchema.post(/^find/, function (docc, next) {
-  console.log(docc);
-  console.log(`Query time = ${ Date.now() - this.start }`);
-  next();
-});
+// tourSchema.post(/^find/, function (docc, next) {
+//   console.log(docc);
+//   console.log(`Query time = ${ Date.now() - this.start }`);
+//   next();
+// });
 
 //Aggregaite Middleware
 //Pre

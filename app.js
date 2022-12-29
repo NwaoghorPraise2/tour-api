@@ -1,6 +1,8 @@
 const express = require('express');
 require('dotenv').config();
 const logger = require('morgan');
+const {globalErrorHandler} = require('./controller/index');
+const appError = require('./utils/appError');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 
@@ -23,5 +25,11 @@ if (process.env.NODE_ENV === 'development') {
 app.use(logger('dev'));
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
+
+app.all('*', (req, res, next) =>{
+  next(new appError(`We do not have this route ${req.originalUrl} on our server`, 404));
+});
+
+app.use(globalErrorHandler);
 
 module.exports = app;

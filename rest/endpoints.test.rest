@@ -1,5 +1,5 @@
 
-GET http://localhost:6060/api/v1/tours/tour-stats HTTP/1.1
+GET http://localhost:6060/api/v1/tours HTTP/1.1
 
 ###
 POST http://localhost:6060/api/v1/tours HTTP/1.1
@@ -20,7 +20,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:6060/api/v1/tours/639c9f7cff59d2ec89ae350f HTTP/1.1
+GET http://localhost:6060/api/v1/tours/63ab3637f9acf6947fbv967a9 HTTP/1.1
 
 ###
 PATCH http://localhost:6060/api/v1/tours/63ab1edb44ef79d9a27abd33 HTTP/1.1
