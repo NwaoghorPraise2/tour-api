@@ -95,19 +95,19 @@ tourSchema.pre('save', function (next) {
 });
 
 //Post middleware will push someting when the pre is done before pushing to db
-tourSchema.post('save', function (doc, next){
-  // console.log(doc);
-  next();
-});
+// tourSchema.post('save', function (doc, next){
+//   // console.log(doc);
+//   next();
+// });
 
 //Query Middleware.
 //Find PRE MIDDLE WARE
-tourSchema.pre(/^find/, function (next) {
-  this.find({ secretTour: { $ne: true }});
+// tourSchema.pre(/^find/, function (next) {
+//   this.find({ secretTour: { $ne: true }});
 
-  this.start = Date.now();
-  next();
-});
+//   this.start = Date.now();
+//   next();
+// });
 
 //Find POST MIDDLE WARE
 // tourSchema.post(/^find/, function (docc, next) {

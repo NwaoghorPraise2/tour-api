@@ -1,8 +1,10 @@
 const {toursModel} = require('../models/index');
-const Tour = toursModel;
-const APIFeatures = require('../utils/apiFeatures');
 const appError = require('../utils/appError');
 const asyncHandler = require('../utils/catchAsync');
+const Tour = toursModel;
+const APIFeatures = require('../utils/apiFeatures');
+
+
 
 const alaistopTours = async (req, res, next) => {
   req.query.sort = '-ratingAverage,-price';
@@ -32,11 +34,12 @@ const getAllTours = asyncHandler(async (req, res, next) => {
 });
 
 const getSingleTour = asyncHandler(async (req, res, next) => {
-    const {id} = req.params;
-    const tour = await Tour.findById(id);
+    const tour = await Tour.findById(req.params.id);
+
+    console.log(tour);
 
     if (!tour) {
-     return next(new appError('No tour found with that ID', 404));
+      return next(new appError('No tour found with that ID.', 404));
     }
 
     res.status(201).json({
