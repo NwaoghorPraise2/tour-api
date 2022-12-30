@@ -10,10 +10,10 @@ const userRouter = require('./routes/userRoutes');
 const app = express();
 app.use(express.static('public'));
 app.use(express.json());
-app.use((req, res, next) => {
-  console.log('hello middle');
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log('hello middle');
+//   next();
+// });
 
 if (process.env.NODE_ENV === 'development') {
   app.use((req, res, next) => {

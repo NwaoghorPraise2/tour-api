@@ -4,8 +4,6 @@ const asyncHandler = require('../utils/catchAsync');
 const Tour = toursModel;
 const APIFeatures = require('../utils/apiFeatures');
 
-
-
 const alaistopTours = async (req, res, next) => {
   req.query.sort = '-ratingAverage,-price';
   req.query.limit = '5';
@@ -68,6 +66,10 @@ const updateTour = asyncHandler(async (req, res, next) => {
       runValidators: true,
     });
 
+    if (!updatedTour) {
+      return next(new appError('No tour found with that ID.', 404));
+    }
+
     res.status(200).json({
       status: 'success',
       data: {
@@ -78,7 +80,11 @@ const updateTour = asyncHandler(async (req, res, next) => {
 
 const deleteTour = asyncHandler(async (req, res, next) => {
     const {id} = req.params;
-    await Tour.findByIdAndDelete(id);
+    const tour = await Tour.findByIdAndDelete(id);
+
+    if (!tour) {
+      return next(new appError('No tour found with that ID.', 404));
+    }
 
     res.status(204).json({
       status: 'success',
