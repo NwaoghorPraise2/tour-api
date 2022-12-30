@@ -1,7 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const logger = require('morgan');
-const {globalErrorHandler} = require('./controller/index');
+const globalErrorHandler = require('./controller/errorHandler')
 const appError = require('./utils/appError');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');

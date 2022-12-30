@@ -20,7 +20,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:6060/api/v1/tours/63ab1edb44ef79d9a27abd33e HTTP/1.1
+GET http://localhost:6060/api/v1/tours/ssfdsfgdfsfsd HTTP/1.1
 
 ###
 PATCH http://localhost:6060/api/v1/tours/63ab1edb44ef79d9a27abd HTTP/1.1

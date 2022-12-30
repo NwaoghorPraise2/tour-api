@@ -7,7 +7,7 @@
     "test": "jest",
     "test-watch": "jest --watch",
     "dev": "nodemon server.js",
-    "prod": "NODE_ENV=production node server.js --trace-warnings",
+    "prod": "NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js"
   },
   "keywords": [
