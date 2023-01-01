@@ -102,12 +102,12 @@ tourSchema.pre('save', function (next) {
 
 //Query Middleware.
 //Find PRE MIDDLE WARE
-// tourSchema.pre(/^find/, function (next) {
-//   this.find({ secretTour: { $ne: true }});
+tourSchema.pre(/^find/, function (next) {
+  this.find({ secretTour: { $ne: true }});
 
-//   this.start = Date.now();
-//   next();
-// });
+  this.start = Date.now();
+  next();
+});
 
 //Find POST MIDDLE WARE
 // tourSchema.post(/^find/, function (docc, next) {
