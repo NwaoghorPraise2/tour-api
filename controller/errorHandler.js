@@ -1,5 +1,8 @@
 const appError = require('./../utils/appError');
 
+//Rmember to handle syntax error for db
+
+
 const handleCastErrorDB = err => {
   const message = `Invalid ${err.path}: ${err.value}.`;
   return new appError(message, 400);

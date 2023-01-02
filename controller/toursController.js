@@ -1,7 +1,6 @@
-const {toursModel} = require('../models/index');
+const Tour = require('../models/toursModel');
 const appError = require('../utils/appError');
 const asyncHandler = require('../utils/catchAsync');
-const Tour = toursModel;
 const APIFeatures = require('../utils/apiFeatures');
 
 const alaistopTours = async (req, res, next) => {
