@@ -22,6 +22,8 @@ const handleValidationErrorDB = err => {
   return new appError(message, 400);
 };
 
+const handleJWTErrors = err => new appError('Invalid Token... Please, login again', 401);
+
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({
     status: err.status,
@@ -69,6 +71,8 @@ module.exports = (err, req, res, next) => {
     if (error.code === 11000) error = handleDuplicateFieldsDB(error) ;
     if (error.name === 'ValidationError')
       error = handleValidationErrorDB(error);
+      if (error.name === 'JsonWebTokenError')
+      error = handleJWTErrors(error);
 
     sendErrorProd(error, res);
   }

@@ -59,11 +59,14 @@ const authenticate = ansycHandler( async (req, res, next) => {
         token = req.headers.authorisation.split(' ')[1];
     }
      console.log(token);
+
     if (!token) {
-        next( new AppError('User is not logged in. Please login...', 401));
+       return next( new AppError('User is not logged in. Please login...', 401));
     }
 
     const decodedToken = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+    
 
     console.log(decodedToken);
     next();

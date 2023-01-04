@@ -1,6 +1,5 @@
-
 GET http://localhost:6060/api/v1/tours HTTP/1.1
-authorisation: Bearer fjerkmdgokirmgjsdnkfdlerjgjmlskgriothro
+authorisation: Bearer yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjQ3ZGUzNjkxOTVlN2FiN2Q5Y2JlZiIsImlhdCI6MTY3Mjg2Nzk0OCwiZXhwIjoxNjczNDcyNzQ4fQ.HIUZigR-BpKPqYUQFMhKcVn7gUGcb46LGOdX41l9XKQ
 
 ###
 POST http://localhost:6065/api/v1/tours HTTP/1.1
