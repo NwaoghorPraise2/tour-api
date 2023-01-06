@@ -8,7 +8,7 @@ require('dotenv').config();
 const connect = async () => {
   try {
     mongoose.set('strictQuery', false);
-    mongoose.connect(process.env.DATABASE, {
+    mongoose.connect('mongodb+srv://praisemedia:Praise2chuku@cluster0.nj2h1mx.mongodb.net/natours?retryWrites=true&w=majority', {
       useNewUrlParser: true,
     });
     console.log('Connected to MongoDB');

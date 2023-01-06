@@ -1,6 +1,5 @@
 const express = require('express');
-const {toursController} = require('../controller/index');
-const authenticate = require('../controller/authController');
+const {toursController, authController} = require('../controller/index');
 
 const router = express.Router();
 
@@ -11,7 +10,7 @@ router
 
 router
   .route('/')
-  .get(authenticate.authenticate, toursController.getAllTours)
+  .get(authController.authenticate, toursController.getAllTours)
   .post(toursController.createTour);
 
 router.route('/tour-stats').get(toursController.getTourStats);
@@ -21,6 +20,6 @@ router
   .route('/:id')
   .get(toursController.getSingleTour)
   .patch(toursController.updateTour)
-  .delete(toursController.deleteTour);
+  .delete(authController.authenticate, authController.grantAccessTo('admin', 'lead-'), toursController.deleteTour);
 
 module.exports = router;

@@ -14,6 +14,8 @@ const signup = ansycHandler(async (req, res, next) => {
         email: req.body.email,
         password: req.body.password,
         passwordConfirm: req.body.passwordConfirm,
+        role: req.body.role, //Remeber to remove it
+        // passwordChangedAt: req.body.passwordChangedAt,//Remeber to remove it.
     });
 
     const access_token = signToken(newUser._id) 
@@ -55,10 +57,10 @@ const authenticate = ansycHandler( async (req, res, next) => {
 
     let token;
 
-    if (req.headers.authorisation && req.headers.authorisation.startsWith('Bearer') ){
-        token = req.headers.authorisation.split(' ')[1];
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer') ){
+        token = req.headers.authorization.split(' ')[1];
     }
-     console.log(token);
+    
 
     if (!token) {
        return next( new AppError('User is not logged in. Please login...', 401));
@@ -66,15 +68,37 @@ const authenticate = ansycHandler( async (req, res, next) => {
 
     const decodedToken = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-    
+    const currentUser = await User.findById(decodedToken.id);
+    if (!currentUser) {
+        return next(new AppError('The User with this token, no longer exists', 401));
+    }
 
-    console.log(decodedToken);
+    if (currentUser.checkPasswordChange(decodedToken.iat)) {
+        return new AppError('Password changed already... login again', 400);
+    }
+
+    req.user = currentUser;
     next();
  });
 
+//Building Authorization
+const grantAccessTo =  (...roles) => {    
+ return   (req, res, next) => {
+    if(!roles.includes(req.user.role)) {
+        return next( new AppError(`You don't have permission to perform this action,`, 403));
+    };
+    next();
+};
+};
+
+const forgotPassword = ansycHandler( async (req, res, next) => {
+
+}); 
 
 module.exports = {
     signup,
     login,
     authenticate,
+    grantAccessTo,
+    forgotPassword,
 }

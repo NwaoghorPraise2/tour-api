@@ -5,10 +5,11 @@ POST http://localhost:6060/api/v1/users/signup HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":"testing3445sss4",
-    "email": "test1ee54sds@gmail.com",
+    "name":"testing405",
+    "email": "test405@gmail.com",
     "password": "praise2test",
-    "passwordConfirm": "praise2test"
+    "passwordConfirm": "praise2test",
+    "passwordChangedAt": "2023-7-1"
 }
 
 ###
@@ -16,7 +17,7 @@ POST http://localhost:6060/api/v1/users/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "test1ee54sds@gmail.com",
+    "email": "test404@gmail.com",
     "password": "praise2test"
 }
 
