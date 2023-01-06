@@ -91,9 +91,23 @@ const grantAccessTo =  (...roles) => {
 };
 };
 
+//Forgot password and reset it
 const forgotPassword = ansycHandler( async (req, res, next) => {
+    const user = await User.findOne({ email: req.body.email });
+    if(!user){
+        return next( new AppError('This user does not exist.', 404));
+    }
 
+    const resetToken = user.createPasswordResetToken();
+    await user.save({ validateBeforeSave: false});
+
+    
 }); 
+
+
+const resetPassword = ansycHandler( async (req, res, next) => {
+
+});
 
 module.exports = {
     signup,
@@ -101,4 +115,5 @@ module.exports = {
     authenticate,
     grantAccessTo,
     forgotPassword,
+    resetPassword,
 }
