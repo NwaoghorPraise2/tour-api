@@ -84,7 +84,7 @@ const authenticate = ansycHandler( async (req, res, next) => {
 
 //Building Authorization
 const grantAccessTo =  (...roles) => {    
- return   (req, res, next) => {
+ return  (req, res, next) => {
     if(!roles.includes(req.user.role)) {
         return next( new AppError(`You don't have permission to perform this action,`, 403));
     };
@@ -102,9 +102,30 @@ const forgotPassword = ansycHandler( async (req, res, next) => {
     const resetToken = user.createPasswordResetToken();
     await user.save({ validateBeforeSave: false});
 
-    
+    const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`;
 
-    
+    //Send Email
+    const message = `Hey, shey you forget password abi? oya click this link ${resetURL} make you reset am. Abeg if nor you apply to do this thing, freestyle this email`;
+try {
+    await sendEmail({
+        email: user.email,
+        subject: 'Reset Password <Token Valid for 10mins Only>',
+        message
+    });
+
+    res.status(200).json({
+        status: 'Success',
+        message: 'Check your mail, a reset link has been sent to you'
+    });
+} catch(err) {
+
+    console.log(err);
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save({ validateBeforeSave: false});
+
+    return next( new AppError('An Error occured sending the Email, try again', 500));
+};
 }); 
 
 
