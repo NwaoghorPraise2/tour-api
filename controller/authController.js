@@ -134,7 +134,10 @@ const resetPassword = ansycHandler( async (req, res, next) => {
 
     const hash =  crypto.createHash('sha256').update(req.params.token).digest('hex');
 
-    const currentUser = await User.findOne({passwordResetToken: hash, passwordResetExpires: { $gt: Date.now()}});
+    const currentUser = await User.findOne({passwordResetToken: hash, passwordResetExpires: { $gt: Date.now() }});
+
+    console.log(currentUser);
+    
     if (!currentUser) {
         return next( new AppError('Token is invalid or has expired.', 400));
     }
