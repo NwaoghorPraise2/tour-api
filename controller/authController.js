@@ -134,7 +134,11 @@ const resetPassword = ansycHandler( async (req, res, next) => {
 
     const hash =  crypto.createHash('sha256').update(req.params.token).digest('hex');
 
-    const currentUser = await User.findOne({passwordResetToken: hash, passwordResetExpires: { $gt: Date.now() }});
+    console.log(`Hashing token sent from client ${hash}`);
+
+    const currentUser = await User.findOne({passwordResetToken: hash});
+
+    console.log(Date.now());
 
     console.log(currentUser);
     
@@ -147,6 +151,8 @@ const resetPassword = ansycHandler( async (req, res, next) => {
     currentUser.passwordResetToken = undefined;
     currentUser.passwordResetExpires = undefined;
     await currentUser.save();
+
+    access_token = signToken(currentUser.id);
 
     res.status(200).json({
         status:'Success',
