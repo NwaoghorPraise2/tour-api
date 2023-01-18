@@ -8,8 +8,7 @@ Content-Type: application/json
     "name":"testing405",
     "email": "test405@gmail.com",
     "password": "praise2test",
-    "passwordConfirm": "praise2test",
-    "passwordChangedAt": "2023-7-1"
+    "passwordConfirm": "praise2test"
 }
 
 ###
