@@ -1,5 +1,5 @@
 GET http://localhost:6060/api/v1/tours HTTP/1.1
-authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjc0MzkxMmI1N2QwMGUyNGQyYTJmOSIsImlhdCI6MTY3Mjk1NDc3MSwiZXhwIjoxNjczNTU5NTcxfQ.QefSZ-MX8DZn3XScQi2-zIElovHwJkk_1_NDOo6-hRE
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzdmNTg4NmQ3ZTM4NzVmYWZkMjFiNiIsImlhdCI6MTY3NDA3NjAwMiwiZXhwIjoxNjc0NjgwODAyfQ.-P7e8hHtvqkuHtE6J51lXAH1RXy3bWoaSiwoWMWw-8Y
 
 ###
 POST http://localhost:6065/api/v1/tours HTTP/1.1

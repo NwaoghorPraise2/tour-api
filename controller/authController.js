@@ -15,9 +15,7 @@ const signup = ansycHandler(async (req, res, next) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        passwordConfirm: req.body.passwordConfirm,
-        role: req.body.role, //Remeber to remove it
-        // passwordChangedAt: req.body.passwordChangedAt,//Remeber to remove it.
+        passwordConfirm: req.body.passwordConfirm
     });
 
     const access_token = signToken(newUser._id) 
@@ -134,13 +132,11 @@ const resetPassword = ansycHandler( async (req, res, next) => {
 
     const hash =  crypto.createHash('sha256').update(req.params.token).digest('hex');
 
-    console.log(`Hashing token sent from client ${hash}`);
+    // console.log(`Hashing token sent from client ${hash}`);
+    const currentUser = await User.findOne({passwordResetToken: hash, passwordResetExpires: { $gt: Date.now() }});
 
-    const currentUser = await User.findOne({passwordResetToken: hash});
-
-    console.log(Date.now());
-
-    console.log(currentUser);
+    // console.log(Date.now());
+    // console.log(currentUser);
     
     if (!currentUser) {
         return next( new AppError('Token is invalid or has expired.', 400));

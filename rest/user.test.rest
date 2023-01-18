@@ -9,6 +9,7 @@ Content-Type: application/json
     "email": "test405@gmail.com",
     "password": "praise2test",
     "passwordConfirm": "praise2test"
+    
 }
 
 ###
@@ -16,9 +17,23 @@ POST http://localhost:6060/api/v1/users/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "test404@gmail.com",
-    "password": "praise2test"
+    "email": "test405@gmail.com",
+    "password": "test405444"
 }
 
 ###
-GET http://localhost:6060/api/v1/users/ HTTP/1.1
+POST http://localhost:6060/api/v1/users/forgotpassword HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "test405@gmail.com"
+}
+
+###
+PATCH  http://localhost:6060/api/v1/users/resetpassword/9a1d56c138ccde04ee87cea7de7610476e22b2a555c12679f2aa4755fb26d38b HTTP/1.1
+Content-Type: application/json
+
+{
+    "password": "test405444",
+    "passwordConfirm": "test405444"
+}
