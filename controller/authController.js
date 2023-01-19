@@ -10,6 +10,11 @@ const signToken = id => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN});
 };
 
+const isUserExist =  ansycHandler( async (email) => {
+    const userEmail = await User.findOne({email});
+    return userEmail;
+});
+
 const signup = ansycHandler(async (req, res, next) => {
     const newUser = await User.create({
         name: req.body.name,
@@ -17,6 +22,13 @@ const signup = ansycHandler(async (req, res, next) => {
         password: req.body.password,
         passwordConfirm: req.body.passwordConfirm
     });
+
+    const isExist = isUserExist(newUser.email);
+
+    //defensive coding to ensure one email one user.
+    if(isExist) {
+        return next(new AppError('Email already registered', 400))
+    }
 
     const access_token = signToken(newUser._id) 
     res.status(201).json({
