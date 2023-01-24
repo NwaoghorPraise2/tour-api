@@ -10,6 +10,19 @@ const signToken = id => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN});
 };
 
+const createSendToken = (user, statusCode, res) => {
+   
+    const access_token = signToken(user._id) 
+
+    res.status(statusCode).json({
+        status: 'Success',
+        access_token,
+        data: {
+            user
+        },
+    });
+};
+
 const isUserExist =  ansycHandler( async (email) => {
     const userEmail = await User.findOne({email});
     return userEmail;
@@ -23,23 +36,13 @@ const signup = ansycHandler(async (req, res, next) => {
         passwordConfirm: req.body.passwordConfirm
     });
 
-    const isExist = isUserExist(newUser.email);
-
     //defensive coding to ensure one email one user.
+    const isExist = isUserExist(newUser.email);
     if(isExist) {
         return next(new AppError('Email already registered', 400))
     }
 
-    const access_token = signToken(newUser._id) 
-    res.status(201).json({
-        status: 'Success',
-        message: 'User created successfully!',
-        access_token,
-        data: {
-            user: newUser
-        },
-    });
- 
+    createSendToken(newUser, 201, res);
 });
 
 const login = ansycHandler( async (req, res, next)=> {
@@ -55,13 +58,7 @@ const login = ansycHandler( async (req, res, next)=> {
         return next( new AppError('Invalid Email or Password entered.', 401));
     }
 
-    const access_token = signToken(user.id);
-
-    res.status(200).json({
-        status:'Success',
-        message: 'User Login',
-        access_token,
-    });
+    createSendToken(user, 200, res)
 }); 
 
 
@@ -147,9 +144,6 @@ const resetPassword = ansycHandler( async (req, res, next) => {
     // console.log(`Hashing token sent from client ${hash}`);
     const currentUser = await User.findOne({passwordResetToken: hash, passwordResetExpires: { $gt: Date.now() }});
 
-    // console.log(Date.now());
-    // console.log(currentUser);
-    
     if (!currentUser) {
         return next( new AppError('Token is invalid or has expired.', 400));
     }
@@ -160,13 +154,24 @@ const resetPassword = ansycHandler( async (req, res, next) => {
     currentUser.passwordResetExpires = undefined;
     await currentUser.save();
 
-    access_token = signToken(currentUser.id);
-
-    res.status(200).json({
-        status:'Success',
-        access_token,
-    });
+    createSendToken(currentUser, 200, res)
 });
+
+const updatePassword = ansycHandler( async ( req, res, next ) => {
+    //Find user by ID
+    const user = await User.findById(req.user.id).select('+password');
+    
+    //Check if the current password is the same with that in DB
+    if (! await user.matchPassword(req.body.currentPassword, user.password)) {
+        next( new AppError('Your current password is not correct', 401));
+    }
+
+    user.password = req.body.password;
+    user.passwordConfirm = req.body.passwordConfirm;
+    await user.save();
+
+    createSendToken(user, 201, res);
+})
 
 module.exports = {
     signup,
@@ -175,4 +180,5 @@ module.exports = {
     grantAccessTo,
     forgotPassword,
     resetPassword,
+    updatePassword,
 }
