@@ -10,10 +10,11 @@ const userRouter = require('./routes/userRoutes');
 
 /*Middlewares*/
 
-//set secuirity helmet
-app.use(helmet());
 
 const app = express();
+//set secuirity helmet
+// app.use(helmet());
+
 app.use(express.static('public'));
 app.use(express.json());
 // app.use((req, res, next) => {

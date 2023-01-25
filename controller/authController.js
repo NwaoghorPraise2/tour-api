@@ -13,16 +13,16 @@ const signToken = id => {
 const createSendToken = (user, statusCode, res) => {
     const access_token = signToken(user._id) 
         //test cookies by signing up
-    const cookiesOptions = { expires: new Date( Date.now + process.env.COOKIES_JWT_EXPIRES * 24 * 60 * 60 * 1000), httpOnly: true}
+    const cookiesOptions = { expire: new Date( Date.now + Number(process.env.COOKIES_JWT_EXPIRES) * 24 * 60 * 60 * 1000), httpOnly: true}
 
     //check if production
     if (process.env.NODE_ENV === 'production') cookiesOptions.secure = true;
 
     //Sending Cookies to the browser
-    res.cookies('jwt', access_token, cookiesOptions);
+    res.cookie('jwt', access_token, cookiesOptions);
 
     // remove Password from data
-    user.password = undefined;
+    // user.password = undefined;
     
         res.status(statusCode).json({
         status: 'Success',
@@ -58,11 +58,15 @@ const signup = ansycHandler(async (req, res, next) => {
 const login = ansycHandler( async (req, res, next)=> {
     const {email, password} = req.body;
 
+    console.log(req.body);
+
     if (!email || !password ) {
        return next( new AppError('Please, provide an Email and Password', 400));
     }
 
     const user = await User.findOne({email}).select('+password');
+
+    console.log(user);
 
     if (!user || !(await user.matchPassword(password, user.password))){
         return next( new AppError('Invalid Email or Password entered.', 401));
