@@ -68,6 +68,12 @@ const userSchema = new mongoose.Schema({
 
   next();
   });
+
+  userSchema.pre(/^find/, function (next) {
+    this.find({active: { $ne : true} });
+
+    next();
+  })
   
   userSchema.methods.checkPasswordChange = function(JWTTimeStamp) {
     if (this.passwordChangedAt) {

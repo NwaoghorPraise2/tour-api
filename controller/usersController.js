@@ -1,3 +1,4 @@
+const { findByIdAndUpdate } = require('../models/usersModel');
 const User =  require('../models/usersModel');
 const AppError = require('../utils/appError');
 const ansycHandler = require('../utils/catchAsync');
@@ -41,6 +42,15 @@ const updateMe = ansycHandler(async (req, res, next)=> {
   });
 });
 
+const deleteMe = ansycHandler( async(req,res,next) => {
+  await User.findByIdAndUpdate(req.user.id, { active: false});
+
+  res.status(204).json({
+    status: 'success',
+    data: null
+  });
+});
+
 const getSingleUser = (req, res) => {
   res.status(500).json({
     status: 'error',
@@ -76,4 +86,5 @@ module.exports = {
   updateUser,
   deleteUser,
   updateMe,
+  deleteMe
 };

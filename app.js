@@ -1,5 +1,7 @@
 const express = require('express');
 require('dotenv').config();
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 const logger = require('morgan');
 const globalErrorHandler = require('./controller/errorHandler')
 const appError = require('./utils/appError');
@@ -7,6 +9,10 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 
 /*Middlewares*/
+
+//set secuirity helmet
+app.use(helmet());
+
 const app = express();
 app.use(express.static('public'));
 app.use(express.json());
@@ -14,6 +20,15 @@ app.use(express.json());
 //   console.log('hello middle');
 //   next();
 // });
+
+//test this rate limiterr...
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests from this IP, please try again in one Hour...'
+})
+
+app.use('/api', limiter);
 
 if (process.env.NODE_ENV === 'development') {
   app.use((req, res, next) => {

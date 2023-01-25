@@ -11,10 +11,20 @@ const signToken = id => {
 };
 
 const createSendToken = (user, statusCode, res) => {
-   
     const access_token = signToken(user._id) 
+        //test cookies by signing up
+    const cookiesOptions = { expires: new Date( Date.now + process.env.COOKIES_JWT_EXPIRES * 24 * 60 * 60 * 1000), httpOnly: true}
 
-    res.status(statusCode).json({
+    //check if production
+    if (process.env.NODE_ENV === 'production') cookiesOptions.secure = true;
+
+    //Sending Cookies to the browser
+    res.cookies('jwt', access_token, cookiesOptions);
+
+    // remove Password from data
+    user.password = undefined;
+    
+        res.status(statusCode).json({
         status: 'Success',
         access_token,
         data: {
