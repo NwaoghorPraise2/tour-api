@@ -1,7 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const rateLimit = require('express-rate-limit');
-const helmet = require('helmet');
+// const helmet = require('helmet');
 const logger = require('morgan');
 const globalErrorHandler = require('./controller/errorHandler')
 const appError = require('./utils/appError');

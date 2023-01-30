@@ -70,11 +70,15 @@ const userSchema = new mongoose.Schema({
   });
 
   userSchema.pre(/^find/, function (next) {
-    this.find({active: { $ne : true} });
+    this.find({active: { $ne : false} });
 
     next();
   })
-  
+
+userSchema.methods.matchPassword = async function (userPassword, Password) {
+    return await bcrypt.compare(userPassword, Password);
+  };
+
   userSchema.methods.checkPasswordChange = function(JWTTimeStamp) {
     if (this.passwordChangedAt) {
       const changedTime = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
@@ -83,11 +87,6 @@ const userSchema = new mongoose.Schema({
     }
 
     return false;
-  };
-
-
-  userSchema.methods.matchPassword = async function (userPassword, Password) {
-    return await bcrypt.compare(userPassword, Password);
   };
 
   userSchema.methods.createPasswordResetToken = function(){

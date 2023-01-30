@@ -1,28 +1,28 @@
-GET http://localhost:6060/api/v1/users HTTP/1.1
+GET http://localhost:6000/api/v1/users HTTP/1.1
 
 ###
-POST http://localhost:6060/api/v1/users/signup HTTP/1.1
+POST http://localhost:6000/api/v1/users/signup HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":"testing405",
-    "email": "test407@gmail.com",
-    "password": "praise2test",
-    "passwordConfirm": "praise2test"
+    "name":"testing409",
+    "email": "test409@gmail.com",
+    "password": "praise3test",
+    "passwordConfirm": "praise3test"
     
 }
 
 ###
-POST http://localhost:6060/api/v1/users/login HTTP/1.1
+POST http://localhost:6000/api/v1/users/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "test407@gmail.com",
-    "password": "praise2test"
+    "email": "test409@gmail.com",
+    "password": "praise3test"
 }
 
 ###
-POST http://localhost:6060/api/v1/users/forgotpassword HTTP/1.1
+POST http://localhost:6000/api/v1/users/forgotpassword HTTP/1.1
 Content-Type: application/json
 
 {
@@ -30,7 +30,7 @@ Content-Type: application/json
 }
 
 ###
-PATCH  http://localhost:6060/api/v1/users/resetpassword/9a1d56c138ccde04ee87cea7de7610476e22b2a555c12679f2aa4755fb26d38b HTTP/1.1
+PATCH  http://localhost:6000/api/v1/users/resetpassword/9a1d56c138ccde04ee87cea7de7610476e22b2a555c12679f2aa4755fb26d38b HTTP/1.1
 Content-Type: application/json
 
 {
