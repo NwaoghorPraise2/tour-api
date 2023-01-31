@@ -1,5 +1,5 @@
 Arguments: 
-  /home/nwaoghor/.nvm/versions/node/v19.1.0/bin/node /home/nwaoghor/.nvm/versions/node/v19.1.0/bin/yarn add express-rate-limit
+  /home/nwaoghor/.nvm/versions/node/v19.1.0/bin/node /home/nwaoghor/.nvm/versions/node/v19.1.0/bin/yarn add @types/xss-clean
 
 PATH: 
   /home/nwaoghor/.nvm/versions/node/v19.1.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
@@ -14,8 +14,17 @@ Platform:
   linux x64
 
 Trace: 
-  Error: getaddrinfo EAI_AGAIN registry.yarnpkg.com
-      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26)
+  Error: https://registry.yarnpkg.com/@types%2fxss-clean: Not found
+      at params.callback [as _callback] (/home/nwaoghor/.nvm/versions/node/v19.1.0/lib/node_modules/yarn/lib/cli.js:66145:18)
+      at self.callback (/home/nwaoghor/.nvm/versions/node/v19.1.0/lib/node_modules/yarn/lib/cli.js:140890:22)
+      at Request.emit (node:events:513:28)
+      at Request.<anonymous> (/home/nwaoghor/.nvm/versions/node/v19.1.0/lib/node_modules/yarn/lib/cli.js:141862:10)
+      at Request.emit (node:events:513:28)
+      at IncomingMessage.<anonymous> (/home/nwaoghor/.nvm/versions/node/v19.1.0/lib/node_modules/yarn/lib/cli.js:141784:12)
+      at Object.onceWrapper (node:events:627:28)
+      at IncomingMessage.emit (node:events:525:35)
+      at endReadableNT (node:internal/streams/readable:1359:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
 
 npm manifest: 
   {
@@ -42,6 +51,9 @@ npm manifest:
       "bcrypt": "^5.1.0",
       "dotenv": "^16.0.3",
       "express": "^4.18.2",
+      "express-mongo-sanitize": "^2.2.0",
+      "express-rate-limit": "^6.7.0",
+      "helmet": "^6.0.1",
       "jest": "^29.3.1",
       "jsonwebtoken": "^9.0.0",
       "mongoose": "^6.8.0",
@@ -49,7 +61,8 @@ npm manifest:
       "nodemailer": "^6.8.0",
       "nodemon": "^2.0.20",
       "slugify": "^1.6.5",
-      "validator": "^13.7.0"
+      "validator": "^13.7.0",
+      "xss-clean": "^0.1.1"
     },
     "devDependencies": {
       "@types/supertest": "^2.0.12",
@@ -2674,6 +2687,16 @@ Lockfile:
       jest-message-util "^29.3.1"
       jest-util "^29.3.1"
   
+  express-mongo-sanitize@^2.2.0:
+    version "2.2.0"
+    resolved "https://registry.yarnpkg.com/express-mongo-sanitize/-/express-mongo-sanitize-2.2.0.tgz#c8c2d45e137f213950f70bf586704e0db5cfe356"
+    integrity sha512-PZBs5nwhD6ek9ZuP+W2xmpvcrHwXZxD5GdieX2dsjPbAbH4azOkrHbycBud2QRU+YQF1CT+pki/lZGedHgo/dQ==
+  
+  express-rate-limit@^6.7.0:
+    version "6.7.0"
+    resolved "https://registry.yarnpkg.com/express-rate-limit/-/express-rate-limit-6.7.0.tgz#6aa8a1bd63dfe79702267b3af1161a93afc1d3c2"
+    integrity sha512-vhwIdRoqcYB/72TK3tRZI+0ttS8Ytrk24GfmsxDXK9o9IhHNO5bXRiXQSExPQ4GbaE5tvIS7j1SGrxsuWs+sGA==
+  
   express@^4.18.2:
     version "4.18.2"
     resolved "https://registry.npmjs.org/express/-/express-4.18.2.tgz"
@@ -3024,6 +3047,11 @@ Lockfile:
     integrity sha512-f2dvO0VU6Oej7RkWJGrehjbzMAjFp5/VKPp5tTpWIV4JHHZK1/BxbFRtf/siA2SWTe09caDmVtYYzWEIbBS4zw==
     dependencies:
       function-bind "^1.1.1"
+  
+  helmet@^6.0.1:
+    version "6.0.1"
+    resolved "https://registry.yarnpkg.com/helmet/-/helmet-6.0.1.tgz#52ec353638b2e87f14fe079d142b368ac11e79a4"
+    integrity sha512-8wo+VdQhTMVBMCITYZaGTbE4lvlthelPYSvoyNvk4RECTmrVjMerp9RfUOQXZWLvCcAn1pKj7ZRxK4lI9Alrcw==
   
   hexoid@^1.0.0:
     version "1.0.0"
@@ -5135,6 +5163,18 @@ Lockfile:
     dependencies:
       imurmurhash "^0.1.4"
       signal-exit "^3.0.7"
+  
+  xss-clean@^0.1.1:
+    version "0.1.1"
+    resolved "https://registry.yarnpkg.com/xss-clean/-/xss-clean-0.1.1.tgz#d3ba684d85ccd52054963d01ad6ab36d662db1a5"
+    integrity sha512-On99yydxoAEkHpraR7Wjg9cD6UmKfbtH2HXO1it2djid32osHL7Qr8bIu+dGYoOeKzf3ZszLfz1gwR/D7whZ2A==
+    dependencies:
+      xss-filters "1.2.6"
+  
+  xss-filters@1.2.6:
+    version "1.2.6"
+    resolved "https://registry.yarnpkg.com/xss-filters/-/xss-filters-1.2.6.tgz#68b39089cb1dff8b9dbc889484839b2f507f5c55"
+    integrity sha512-uqgwZRpVJCDfHsRX9lDrkPyCitQYzPklmLSbajJncATZKAUd1tF1x9y2VyPNFMv8SsSWed80xorSS5qGpw3WiA==
   
   y18n@^5.0.5:
     version "5.0.8"

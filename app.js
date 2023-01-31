@@ -1,7 +1,10 @@
 const express = require('express');
 require('dotenv').config();
 const rateLimit = require('express-rate-limit');
-// const helmet = require('helmet');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
 const logger = require('morgan');
 const globalErrorHandler = require('./controller/errorHandler')
 const appError = require('./utils/appError');
@@ -13,10 +16,24 @@ const userRouter = require('./routes/userRoutes');
 
 const app = express();
 //set secuirity helmet
-// app.use(helmet());
+app.use(helmet());
 
 app.use(express.static('public'));
-app.use(express.json());
+app.use(express.json({ limit: '10kb'}));
+
+//prevent NOSQL injection attack
+app.use(mongoSanitize());
+
+//prevent XSS attack
+app.use(xss());
+
+//prevent parameter pollution attack
+app.use(hpp({
+  whitelist: [  
+    'duration'
+  ]
+}));
+
 // app.use((req, res, next) => {
 //   console.log('hello middle');
 //   next();
